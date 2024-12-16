@@ -8,12 +8,12 @@ import HomeMain from './components/HomeMainComponents'
 function App() {
   return (
     <>
-      <ProfileAside />
       <header>
         <MyNav />
       </header>
       <main>
         <HomeMain />
+        <ProfileAside />
       </main>
     </>
   )
