@@ -4,11 +4,6 @@ const ProfileAside = () => {
   return (
     <Container className='maxWidthLgScreen my-3'>
       <Row>
-        <Col xs={12} md={7}>
-          <Card>
-            <Card.Img variant='top' src='https://placedog.net/500/500' />
-          </Card>
-        </Col>
         <Col xs={12} md={5}>
           <Card>
             <Card.Body>
