@@ -1,10 +1,8 @@
-import { useState } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 function App() {
-  return <></>
+	return <></>;
 }
 
-export default App
+export default App;
