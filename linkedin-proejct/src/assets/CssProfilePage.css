@@ -1,0 +1,36 @@
+.profile-button button {
+	height: 35px;
+	margin-right: 0.7rem;
+	margin-bottom: 0.7rem;
+}
+.custom-hover:hover {
+	background-color: antiquewhite;
+}
+
+.pen {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 35px !important;
+	height: 35px;
+	border-radius: 50%;
+}
+.pen:hover {
+	background-color: antiquewhite;
+}
+
+.expertselection h3 {
+	width: 85%;
+}
+.analisi h3 {
+	font-size: 1rem;
+}
+.analisi p {
+	font-size: 0.85rem;
+}
+
+@media screen and (min-width: 768px) {
+	.board-info {
+		width: 50%;
+	}
+}
