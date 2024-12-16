@@ -3,3 +3,13 @@
     max-width: 70vw;
   }
 }
+
+.overStyleProfileSuggestName:hover {
+  color: lightskyblue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.overMostrTutto:hover {
+  background-color: lightgray;
+}
