@@ -35,12 +35,13 @@ const SearchJobs = () => {
   }
 
   if (data.length > 0) {
-    console.log('Risultati di ricerca: ', data)
-  }
-
-  if (data.length > 0) {
     console.log('dati salvati nello state: ', data)
   }
+
+  useEffect(() => {
+    getData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query])
   return (
     <Container className=' my-3'>
       <Row>
