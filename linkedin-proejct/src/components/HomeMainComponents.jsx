@@ -1,5 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import HomeSideBar from "./HomeSideBar";
+import HomeRightTop from "../components/HomeRightTop";
+import HomeRightBottom from "../components/HomeRightBottom";
 
 const HomeMainComponent = () => {
 	return (
@@ -9,7 +11,9 @@ const HomeMainComponent = () => {
 					<HomeSideBar />
 				</Col>
 				<Col lg={7}>{/* contenuto centrale */}</Col>
-				<Col>{/* barra destra */}</Col>
+				<Col lg={2}><HomeRightTop />
+				<HomeRightBottom />
+				</Col>
 			</Row>
 		</Container>
 	);
