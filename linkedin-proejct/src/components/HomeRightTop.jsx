@@ -1,9 +1,9 @@
-import React from 'react';
-import "../assets/HomeRightTop.css"
+import React from 'react'
+import '../assets/HomeRightTop.css'
 
 const HomeRightTop = () => {
   return (
-    <div className="sidebar mt-5">
+    <div className="sidebar2 mt-5">
       <div className="featured">
         <h3>In primo piano</h3>
         <p className="subtitle">a cura di LinkedIn Notizie</p>
@@ -29,23 +29,31 @@ const HomeRightTop = () => {
             <span className="news-meta">11 giorni fa • 4.248 lettori</span>
           </li>
         </ul>
-        <a href="#" className="view-more">Vedi altro ▾</a>
+        <a href="#" className="view-more">
+          Vedi altro ▾
+        </a>
       </div>
       <div className="games">
         <h4>I giochi di oggi</h4>
         <div className="game">
-          <span className="game-icon" style={{ backgroundColor: '#f2f2f2' }}></span>
+          <span
+            className="game-icon"
+            style={{ backgroundColor: '#f2f2f2' }}
+          ></span>
           <span className="game-name">Tango</span>
           <span className="game-description">Armonizza la griglia</span>
         </div>
         <div className="game">
-          <span className="game-icon" style={{ backgroundColor: '#d8d8ff' }}></span>
+          <span
+            className="game-icon"
+            style={{ backgroundColor: '#d8d8ff' }}
+          ></span>
           <span className="game-name">Queens</span>
           <span className="game-description">Incorona ogni regione</span>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default HomeRightTop;
+export default HomeRightTop
