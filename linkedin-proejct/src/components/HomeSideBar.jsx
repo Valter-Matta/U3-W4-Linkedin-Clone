@@ -5,7 +5,7 @@ import HomeBottomSidebar from './HomeBottomSideBar'
 const HomeSideBar = () => {
   return (
     <>
-      <div className="sidebar mt-5">
+      <div className="sidebar2 mt-5">
         <div
           style={{ borderRadius: '20px 20px 0 0' }}
           className="bg-primary d-flex justify-content-center"
