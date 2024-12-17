@@ -1,4 +1,9 @@
 .picture-sidebar {
-	position: relative;
-	top: 1.6em;
+  position: relative;
+  top: 1.6em;
+}
+
+.sidebar {
+  border: 1px solid black;
+  border-radius: 20px;
 }
