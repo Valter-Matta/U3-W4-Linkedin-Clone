@@ -2,20 +2,26 @@ import { Card } from "react-bootstrap";
 import { MdOutlineCancel, MdSecurityUpdateGood } from "react-icons/md";
 import { FaPen } from "react-icons/fa";
 import { HiDotsHorizontal } from "react-icons/hi";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProfileBoard = () => {
+	const state = useSelector(reduxState => {
+		return reduxState.profile.users;
+	});
+
 	return (
 		<Card className="mt-4">
 			<Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
 			<div className="border border-3 border-white">
 				<img
 					className="rounded-circle border border-3 border-withe ms-3"
-					src="https://placecats.com/100/100"
+					src={state.image}
+					width="100px"
 				></img>
 			</div>
 			<Card.Body className="pb-0">
 				<Card.Title className="d-flex align-items-center ">
-					Nome utente{" "}
+					{state.name} {state.surname}
 					<div className="ms-3">
 						<span className="d-flex align-items-center fs-6 text-primary border border-1 rounded-4 border-primary p-1 px-2">
 							<MdSecurityUpdateGood /> Aggiungi badge di verifica
@@ -24,9 +30,11 @@ const ProfileBoard = () => {
 				</Card.Title>
 				<div className="d-flex justify-content-between">
 					<div>
-						<Card.Text className="m-0">Competenze | Competenze | ...</Card.Text>
+						<Card.Text className="m-0">
+							{state.title} | {state.bio}{" "}
+						</Card.Text>
 						<Card.Text className="pb-2">
-							Posizione &middot;{" "}
+							{state.area} &middot;{" "}
 							<span className="text-primary">Informazioni di contatto</span>{" "}
 						</Card.Text>
 					</div>

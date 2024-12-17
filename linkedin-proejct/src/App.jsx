@@ -7,6 +7,7 @@ import ProfilePage from "./components/ProfilePage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Container, Row } from "react-bootstrap";
 import HomeMainComponent from "./components/HomeMainComponents";
+import { useSelector } from "react-redux";
 function App() {
 	return (
 		<BrowserRouter>
@@ -17,7 +18,7 @@ function App() {
 				<Container>
 					<Routes>
 						<Route
-							path="/"
+							path={`/`}
 							element={
 								<Row>
 									<div className="p-0 col-12 col-lg-8">
