@@ -119,7 +119,19 @@ export default function HomeCenterComponent() {
                 </p>
               </div>
             </div>
-            <p style={{ margin: 0 }}>
+            <p
+              style={{
+                margin: 0,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: 'vertical',
+                maxHeight: '4.5em',
+                lineHeight: '1.5em',
+                color: 'gray',
+              }}
+            >
               {post.text || 'Contenuto non disponibile'}
             </p>
             {post.image && (
