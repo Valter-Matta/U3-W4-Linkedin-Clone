@@ -1,0 +1,58 @@
+.sidebar {
+    width: 300px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    position: sticky;
+    top: 20px;
+    margin-top: 20px;
+    z-index: 1000;
+  }
+  
+  .job-ad {
+    margin-top: 20px;
+  }
+  
+  .job-ad-content h4 {
+    font-size: 1em;
+    margin-bottom: 10px;
+  }
+  
+  .ad-image {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  .suggestion {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .suggestion-label {
+    font-weight: bold;
+    font-size: 0.8em;
+    color: #666;
+  }
+  
+  .footer {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 20px;
+  }
+  
+  .footer ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer ul li {
+    margin-bottom: 5px;
+  }
+  
