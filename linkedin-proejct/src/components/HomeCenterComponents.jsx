@@ -44,7 +44,6 @@ export default function HomeCenterComponent() {
       .then((response) => response.json())
       .then((data) => {
         console.log('Post creato:', data)
-
         fetchPosts()
         setShowModal(false)
         setNewPost({ text: '', image: '' })
@@ -74,9 +73,19 @@ export default function HomeCenterComponent() {
             padding: '10px',
             borderRadius: '20px',
             border: '1px solid #ccc',
+            marginBottom: '10px',
           }}
           onClick={() => setShowModal(true)}
         />
+        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+          <span style={{ cursor: 'pointer', color: '#0073b1' }}>
+            📷 Contenuti multimediali
+          </span>
+          <span style={{ cursor: 'pointer', color: '#0073b1' }}>📅 Evento</span>
+          <span style={{ cursor: 'pointer', color: '#0073b1' }}>
+            ✍️ Scrivi un articolo
+          </span>
+        </div>
       </div>
 
       {posts.length > 0 ? (
