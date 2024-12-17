@@ -55,7 +55,7 @@ const ProfileBoard = () => {
 			</Card.Body>
 			<Card.Body className="d-flex flex-column flex-md-row justify-content-between m-0 p-0 pb-3 px-4">
 				<div className="p-2 bg-black me-md-2 mb-2 mb-md-0  bg-opacity-25 me-0  rounded-3  board-info">
-					<h3 className="fs-6 d-flex justify-content-between pe-2 mb-0">
+					<h3 className="fs-6 d-flex justify-content-between align-items-center pe-2 mb-0">
 						Disponibile a lavorare{" "}
 						<span className="pen">
 							<FaPen className="custom-hover" />
