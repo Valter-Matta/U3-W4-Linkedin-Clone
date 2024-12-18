@@ -9,8 +9,50 @@ import { BsChatDotsFill } from 'react-icons/bs'
 import { FaBell } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import DropdownProfile from './DropdownProfile'
+import { useState } from 'react'
+import { FaUser } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
 
 function MyNav() {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+  const state = useSelector((state) => state)
+
+  const searcher = async (e) => {
+    const query = e.target.value
+    setSearchQuery(query)
+
+    if (query.length > 0) {
+      try {
+        const response = await fetch(
+          `https://striveschool-api.herokuapp.com/api/profile/`,
+          {
+            headers: {
+              Authorization:
+                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYxNGIwOTc0YTg2ODAwMTVkYjU1MjciLCJpYXQiOjE3MzQ0Mjk0NDksImV4cCI6MTczNTYzOTA0OX0.mE5mKRYlk-WIPHgNEPOuGdut9pE2Lh53UeLEQHrDUTI',
+            },
+          }
+        )
+
+        if (!response.ok) {
+          throw new Error('Errore durante la richiesta.')
+        }
+
+        const data = await response.json()
+        const filteredResults = data.filter((profile) =>
+          profile.username.toLowerCase().includes(query.toLowerCase())
+        )
+
+        setSearchResults(filteredResults)
+      } catch (error) {
+        console.error('Errore durante la ricerca:', error)
+        setSearchResults([])
+      }
+    } else {
+      setSearchResults([])
+    }
+  }
+
   return (
     <Navbar expand='lg' className='bg-body-tertiary'>
       <Container>
@@ -25,8 +67,8 @@ function MyNav() {
           type='text'
           className='p-2 border border-none w-25'
           placeholder='Cerca'
-          value=''
-          readOnly
+          value={searchQuery}
+          onChange={searcher}
         />
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
@@ -62,15 +104,63 @@ function MyNav() {
                 <p>Notifiche</p>
               </div>
             </Link>
-            <Link className='nav-link text-decoration-none align-self-baseline'>
-              <div className='d-flex flex-column align-items-center'>
-                <DropdownProfile />
+
+            <Link to={'/'} className=' text-decoration-none nav-link'>
+              <div className='d-flex flex-column align-items-center me-3'>
+                <FaUser className='fs-4' />
+                <p>Profilo</p>
               </div>
             </Link>
-            <div className='vertical-line'></div>
+
+            {state.profileKey.key ? (
+              <Link className='nav-link text-decoration-none align-self-baseline'>
+                <div className='d-flex flex-column align-items-center'>
+                  <DropdownProfile />
+                </div>
+              </Link>
+            ) : (
+              <></>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
+      {searchResults.length > 0 && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '70px',
+            left: '22%',
+            backgroundColor: 'white',
+            border: '1px solid #ccc',
+            borderRadius: '20px',
+            width: '300px',
+            maxHeight: '300px',
+            overflowY: 'scroll',
+            overflowX: 'hidden',
+            zIndex: 1000,
+          }}
+        >
+          {searchResults.map((result) => {
+            console.log(result)
+            return (
+              <div
+                key={result._id}
+                style={{
+                  padding: '10px',
+                  borderBottom: '1px solid #eee',
+                  cursor: 'pointer',
+                }}
+              >
+                <img src={result.image} width='30px' alt='' />
+                <h5>User: {result.username}</h5>
+                <p>bio: {result.bio}</p>
+                <small>{result.title}</small>
+                <p>Email: {result.email}</p>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </Navbar>
   )
 }

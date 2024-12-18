@@ -6,7 +6,8 @@ import ProfileActivities from "./ProfileActivities";
 import ProfileExperiences from "./ProfileExperiences.jsx";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getmyProfile, myProfile } from "../redux/actions/index.js";
+import { getmyProfile } from "../redux/actions/index.js";
+import DropdownProfile from "./DropdownProfile.jsx";
 
 export const myKey =
 	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYxMzdmMjc0YTg2ODAwMTVkYjU1MTAiLCJpYXQiOjE3MzQ0Mjc5NTIsImV4cCI6MTczNTYzNzU1Mn0.-Wq-ZqeJEtIFi8ja0gV6qQ6OPLtCvtQokH0TsvEc-3o";
@@ -27,14 +28,23 @@ const ProfilePage = () => {
 
 	return (
 		<Container>
-			<Row>
-				<Col xs={12}>
-					<ProfileBoard />
-					<ProfileAnalitics />
-					<ProfileActivities />
-					<ProfileExperiences />
-				</Col>
-			</Row>
+			{key ? (
+				<Row>
+					<Col xs={12}>
+						<ProfileBoard />
+						<ProfileAnalitics />
+						<ProfileActivities />
+						<ProfileExperiences />
+					</Col>
+				</Row>
+			) : (
+				<Row className=" justify-content-center p-3">
+					<Col>
+						<h1>Seleziona il profilo da visualizzare</h1>
+						<DropdownProfile />
+					</Col>
+				</Row>
+			)}
 		</Container>
 	);
 };

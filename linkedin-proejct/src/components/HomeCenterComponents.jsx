@@ -107,7 +107,7 @@ export default function HomeCenterComponent() {
                 marginBottom: '10px',
               }}
             >
-              <img
+              {/* <img
                 src="https://via.placeholder.com/50"
                 alt="profile"
                 style={{
@@ -116,7 +116,7 @@ export default function HomeCenterComponent() {
                   borderRadius: '50%',
                   marginRight: '10px',
                 }}
-              />
+              /> */}
               <div>
                 <h4 style={{ margin: 0 }}>
                   {post.username || 'Utente sconosciuto'}
@@ -157,9 +157,7 @@ export default function HomeCenterComponent() {
           </div>
         ))
       ) : (
-        <p style={{ textAlign: 'center', color: 'gray' }}>
-          Nessun post disponibile
-        </p>
+        <p style={{ textAlign: 'center', color: 'gray' }}>Caricando...</p>
       )}
 
       {showModal && (
@@ -214,6 +212,7 @@ export default function HomeCenterComponent() {
                 marginBottom: '10px',
               }}
             />
+
             <div style={{ textAlign: 'right' }}>
               <button
                 onClick={handlePostSubmit}
