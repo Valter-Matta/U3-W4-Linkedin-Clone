@@ -8,6 +8,7 @@ import { MdWork } from 'react-icons/md'
 import { BsChatDotsFill } from 'react-icons/bs'
 import { FaBell } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import DropdownProfile from './DropdownProfile'
 
 function MyNav() {
   return (
@@ -61,9 +62,9 @@ function MyNav() {
                 <p>Notifiche</p>
               </div>
             </Link>
-            <Link to={'/'} className='nav-link text-decoration-none'>
+            <Link className='nav-link text-decoration-none align-self-baseline'>
               <div className='d-flex flex-column align-items-center'>
-                <p>Tu</p>
+                <DropdownProfile />
               </div>
             </Link>
             <div className='vertical-line'></div>
