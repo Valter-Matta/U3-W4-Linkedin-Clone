@@ -17,6 +17,14 @@ const mainReducer = (state = initialState, action) => {
 				...state,
 				experiences: action.payload,
 			};
+		case "SET_PHOTO":
+			return {
+				...state,
+				users: {
+					...state.users,
+					image: action.payload,
+				},
+			};
 		default:
 			return state;
 	}

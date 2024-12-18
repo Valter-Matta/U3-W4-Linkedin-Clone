@@ -2,22 +2,98 @@ import { Card } from "react-bootstrap";
 import { MdOutlineCancel, MdSecurityUpdateGood } from "react-icons/md";
 import { FaPen } from "react-icons/fa";
 import { HiDotsHorizontal } from "react-icons/hi";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { myProfile, getmyProfile } from "../redux/actions";
+import { useEffect, useState } from "react";
+import EditorImageProfile from "./EditorImageProfile";
 
 const ProfileBoard = () => {
-	const state = useSelector(reduxState => {
-		return reduxState.profile.users;
+	const state = useSelector(reduxState => reduxState.profile.users);
+	const key = useSelector(state => state.profileKey.key);
+
+	const dispatch = useDispatch();
+
+	const [show, setShow] = useState(false);
+
+	const [formData, setFormData] = useState({
+		profile: "",
 	});
+
+	const [profileImage, setProfileImage] = useState(state.image);
+
+	const setImageProfile = async e => {
+		e.preventDefault();
+		const formDataToSend = new FormData();
+		formDataToSend.append("profile", formData.profile);
+
+		try {
+			const response = await fetch(
+				`https://striveschool-api.herokuapp.com/api/profile/${state._id}/picture`,
+				{
+					method: "POST",
+					headers: {
+						Authorization: `Bearer ${key}`,
+					},
+					body: formDataToSend,
+				},
+			);
+
+			if (response.ok) {
+				console.log("foto modifcata con successo");
+
+				const updatedImageUrl = `${state.profile}?${new Date().getTime()}`;
+				setProfileImage(updatedImageUrl);
+				setShow(false);
+				setFormData({ profile: "" });
+			} else {
+				console.error("Errore nell'invio:", response.statusText);
+			}
+		} catch (error) {
+			console.error("Errore richiesta:", error);
+		}
+	};
+
+	useEffect(() => {
+		getmyProfile();
+		dispatch({
+			type: "SET_PHOTO",
+			payload: profileImage,
+		});
+	}, [profileImage]);
 
 	return (
 		<Card className="mt-4">
+			{show && (
+				<EditorImageProfile
+					show={show}
+					setShow={setShow}
+					setImageProfile={setImageProfile}
+					setFormData={setFormData}
+					formData={formData}
+				/>
+			)}
 			<Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
-			<div className="border border-3 border-white">
+			<div className=" position-relative w-25 border border-3 border-white">
 				<img
 					className="rounded-circle border border-3 border-withe ms-3"
-					src={state.image}
-					width="100px"
+					src={
+						state.profile
+							? `${state.profile}?${new Date().getTime()}`
+							: state.image
+					}
+					width="150px"
+					height="150px"
 				></img>
+				<div className="pen profile position-absolute bottom-0 start-50">
+					<button
+						onClick={() => {
+							setShow(true);
+						}}
+						className=" text-decoration-none pen border-0 bg-transparent"
+					>
+						<FaPen className="custom-hover" />
+					</button>
+				</div>
 			</div>
 			<Card.Body className="pb-0">
 				<Card.Title className="d-flex align-items-center ">

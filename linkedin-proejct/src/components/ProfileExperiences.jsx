@@ -49,6 +49,32 @@ const ProfileExperiences = () => {
 
 	return (
 		<>
+			{state.profile.experiences.length === 0 && (
+				<div>
+					<Card className="pt-3 mt-2">
+						<div className="px-4 d-flex justify-content-between">
+							<div>
+								<h1 className="fs-4 m-0">Non ci sono esperienze</h1>
+							</div>
+							<div className="d-flex">
+								<div className="pen d-flex align-items-center me-3">
+									<button
+										className="text-decoration-none pen border-0 bg-transparent"
+										onClick={() => setShowForm(true)} // Mostra il form
+									>
+										<FaPlus className="custom-hover" />
+									</button>
+								</div>
+							</div>
+						</div>
+						<div className="d-flex px-4 pb-3">
+							<p className="fs-6 fw-medium text-primary  m-0">
+								Aggiungi una nuova esperienza per farti notare dai recruiter
+							</p>
+						</div>
+					</Card>
+				</div>
+			)}
 			{state.profile.experiences &&
 				state.profile.experiences.map(exp => (
 					<div key={exp._id}>
