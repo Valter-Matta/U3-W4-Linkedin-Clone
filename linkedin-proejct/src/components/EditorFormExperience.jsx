@@ -1,40 +1,32 @@
-import { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { myKey } from "./ProfilePage";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
-const AddExperienceForm = ({
-	showForm,
-	setShowForm,
+const EditorFormExperience = ({
 	handleExperienceAdded,
+	showEditorForm,
+	setShowEditorForm,
+	id,
+	editorForm,
 }) => {
 	const userID = useSelector(reduxState => reduxState.profile.users._id);
 
-	const listOfExperiences = `https://striveschool-api.herokuapp.com/api/profile/${userID}/experiences`;
+	const selectedExperience = `https://striveschool-api.herokuapp.com/api/profile/${userID}/experiences/${id}`;
 
-	const [formData, setFormData] = useState({
-		role: "",
-		company: "",
-		startDate: "",
-		image: "",
-		endDate: "",
-		description: "",
-		area: "",
-	});
+	const [formData, setFormData] = useState(editorForm);
 
 	const handleChange = e => {
-		console.log(e.target);
-
 		const { name, value } = e.target;
 		setFormData({ ...formData, [name]: value });
 	};
 
-	const addExperience = async e => {
+	const editExperience = async e => {
 		e.preventDefault();
 		try {
-			const response = await fetch(listOfExperiences, {
-				method: "POST",
+			const response = await fetch(selectedExperience, {
+				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${myKey}`,
@@ -44,7 +36,7 @@ const AddExperienceForm = ({
 
 			if (response.ok) {
 				console.log("Esperienza aggiunta con successo:");
-				setShowForm(false);
+				setShowEditorForm(false);
 				setFormData({
 					role: "",
 					company: "",
@@ -66,8 +58,8 @@ const AddExperienceForm = ({
 	return (
 		<>
 			<Modal
-				show={showForm}
-				onHide={() => setShowForm(false)}
+				show={showEditorForm}
+				onHide={() => setShowEditorForm(false)}
 				centered
 				keyboard={true}
 				style={{ backgroundColor: "rgba(200, 200, 200, 0.7)" }}
@@ -77,7 +69,7 @@ const AddExperienceForm = ({
 				</Modal.Header>
 
 				<Modal.Body>
-					<Form onSubmit={addExperience}>
+					<Form onSubmit={editExperience}>
 						{/* Ruolo */}
 						<Form.Group controlId="role">
 							<Form.Label>Ruolo</Form.Label>
@@ -87,7 +79,6 @@ const AddExperienceForm = ({
 								value={formData.role}
 								onChange={handleChange}
 								placeholder="Inserisci il ruolo"
-								required
 							/>
 						</Form.Group>
 
@@ -100,7 +91,6 @@ const AddExperienceForm = ({
 								value={formData.company}
 								onChange={handleChange}
 								placeholder="Inserisci l'azienda"
-								required
 							/>
 						</Form.Group>
 
@@ -112,7 +102,6 @@ const AddExperienceForm = ({
 								name="startDate"
 								value={formData.startDate}
 								onChange={handleChange}
-								required
 							/>
 						</Form.Group>
 
@@ -137,7 +126,6 @@ const AddExperienceForm = ({
 								value={formData.description}
 								onChange={handleChange}
 								placeholder="Descrivi la tua esperienza"
-								required
 							/>
 						</Form.Group>
 
@@ -149,7 +137,6 @@ const AddExperienceForm = ({
 								value={formData.image}
 								onChange={handleChange}
 								placeholder="Inserisci un Immagine"
-								required
 							/>
 						</Form.Group>
 
@@ -162,7 +149,6 @@ const AddExperienceForm = ({
 								value={formData.area}
 								onChange={handleChange}
 								placeholder="Es. Milano"
-								required
 							/>
 						</Form.Group>
 
@@ -177,4 +163,4 @@ const AddExperienceForm = ({
 	);
 };
 
-export default AddExperienceForm;
+export default EditorFormExperience;
