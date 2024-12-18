@@ -1,23 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Card } from "react-bootstrap";
 import { FaPen, FaPlus } from "react-icons/fa";
 import { myKey } from "./ProfilePage";
 import { useDispatch, useSelector } from "react-redux";
-import ExperienceForm from "./FormForExperience";
+
 import { addExperienceAction } from "../redux/actions";
+import AddExperienceForm from "./FormForExperience";
+import EditorFormExperience from "./EditorFormExperience";
 
 const ProfileExperiences = () => {
 	const [showForm, setShowForm] = useState(false);
-
-	const state = useSelector(reduxState => reduxState);
+	const [showEditorForm, setShowEditorForm] = useState(false);
+	const [experienceID, setExperienceID] = useState(null);
+	const [editorForm, setEditorForm] = useState(null);
 
 	const dispatch = useDispatch();
+	const state = useSelector(reduxState => reduxState);
 
-	const listOfExperiences = `https://striveschool-api.herokuapp.com/api/profile/${state.profile.users._id}/experiences`;
-	const getExperiences = async () => {
+	const getExperiences = useCallback(async () => {
+		const listOfExperiences = `https://striveschool-api.herokuapp.com/api/profile/${state.profile.users._id}/experiences`;
 		try {
 			const call = await fetch(listOfExperiences, {
 				headers: {
+					"Content-Type": "application/json",
 					Authorization: `Bearer ${myKey}`,
 				},
 			});
@@ -31,15 +36,15 @@ const ProfileExperiences = () => {
 		} catch (error) {
 			console.log(error);
 		}
-	};
+	}, [state.profile.users._id, dispatch]);
 
 	useEffect(() => {
 		getExperiences();
-	}, [state.profile.users]);
+	}, [getExperiences]);
 
 	const handleExperienceAdded = () => {
-		getExperiences(); // Ricarica le esperienze dal server
-		setShowForm(false); // Chiude il form
+		getExperiences();
+		setShowForm(false);
 	};
 
 	return (
@@ -63,13 +68,35 @@ const ProfileExperiences = () => {
 										</button>
 									</div>
 									<div className="pen">
-										<FaPen className="custom-hover" />
+										<button
+											className="text-decoration-none pen border-0 bg-transparent"
+											onClick={() => {
+												setShowEditorForm(true);
+												setExperienceID(exp._id);
+												setEditorForm({
+													role: exp.role,
+													company: exp.company,
+													startDate: exp.startDate,
+													image: exp.image,
+													endDate: exp.endDate,
+													description: exp.description,
+													area: exp.area,
+												});
+											}} // Mostra il form
+										>
+											<FaPen className="custom-hover" />
+										</button>
 									</div>
 								</div>
 							</div>
 							<div className="d-flex px-4 pb-3">
 								<div>
-									<img src="https://placedog.net/50/50" alt="profile-pic" />
+									<img
+										src={exp.image}
+										width="70px"
+										height="70px"
+										alt="profile-pic"
+									/>
 								</div>
 								<div className="px-2 d-flex flex-column justify-content-between">
 									<p className="fs-6 fw-medium text-primary  m-0">
@@ -83,10 +110,19 @@ const ProfileExperiences = () => {
 				))}
 			{/* Form posizionato fuori dal map */}
 			{showForm && (
-				<ExperienceForm
+				<AddExperienceForm
 					showForm={showForm}
 					setShowForm={setShowForm}
 					handleExperienceAdded={handleExperienceAdded}
+				/>
+			)}
+			{showEditorForm && (
+				<EditorFormExperience
+					id={experienceID}
+					showEditorForm={showEditorForm}
+					setShowEditorForm={setShowEditorForm}
+					handleExperienceAdded={handleExperienceAdded}
+					editorForm={editorForm}
 				/>
 			)}
 		</>

@@ -6,7 +6,7 @@ const myProfile = "https://striveschool-api.herokuapp.com/api/profile/me";
 const myKey =
 	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYxMzdmMjc0YTg2ODAwMTVkYjU1MTAiLCJpYXQiOjE3MzQ0Mjc5NTIsImV4cCI6MTczNTYzNzU1Mn0.-Wq-ZqeJEtIFi8ja0gV6qQ6OPLtCvtQokH0TsvEc-3o";
 
-export const getmyProfile = p => {
+export const getmyProfile = () => {
 	return async (dispatch, getState) => {
 		try {
 			const call = await fetch(myProfile, {

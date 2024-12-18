@@ -15,7 +15,7 @@ const mainReducer = (state = initialState, action) => {
 		case GET_EXPERIENCE:
 			return {
 				...state,
-				experiences: state.experiences.concat(action.payload),
+				experiences: action.payload,
 			};
 		default:
 			return state;
