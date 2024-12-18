@@ -7,6 +7,7 @@ import ProfileExperiences from './ProfileExperiences.jsx'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getmyProfile } from '../redux/actions/index.js'
+import DropdownProfile from './DropdownProfile.jsx'
 
 const myProfile = 'https://striveschool-api.herokuapp.com/api/profile/me'
 export const myKey =
@@ -37,18 +38,28 @@ const ProfilePage = () => {
 
   useEffect(() => {
     getProfile()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key])
 
   return (
     <Container>
-      <Row>
-        <Col xs={12}>
-          <ProfileBoard />
-          <ProfileAnalitics />
-          <ProfileActivities />
-          <ProfileExperiences />
-        </Col>
-      </Row>
+      {key ? (
+        <Row>
+          <Col xs={12}>
+            <ProfileBoard />
+            <ProfileAnalitics />
+            <ProfileActivities />
+            <ProfileExperiences />
+          </Col>
+        </Row>
+      ) : (
+        <Row className=' justify-content-center p-3'>
+          <Col>
+            <h1>Seleziona il profilo da visualizzare</h1>
+            <DropdownProfile />
+          </Col>
+        </Row>
+      )}
     </Container>
   )
 }

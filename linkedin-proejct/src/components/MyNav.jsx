@@ -10,10 +10,13 @@ import { FaBell } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import DropdownProfile from './DropdownProfile'
 import { useState } from 'react'
+import { FaUser } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
 
 function MyNav() {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
+  const state = useSelector((state) => state)
 
   const searcher = async (e) => {
     const query = e.target.value
@@ -51,62 +54,73 @@ function MyNav() {
   }
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand='lg' className='bg-body-tertiary'>
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href='#home'>
           <GrLinkedin
             style={{ borderRadius: '15%', color: '#0A66C2' }}
-            className="fs-1"
+            className='fs-1'
           />
         </Navbar.Brand>
         <input
           style={{ backgroundColor: '#EDF3F8' }}
-          type="text"
-          className="p-2 border border-none w-25"
-          placeholder="Cerca"
+          type='text'
+          className='p-2 border border-none w-25'
+          placeholder='Cerca'
           value={searchQuery}
           onChange={searcher}
         />
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-5 mt-2 d-flex justify-content-around align-items-center">
-            <Link className="text-decoration-none nav-link" to="/Home">
-              <div className="d-flex flex-column align-items-center me-3 ms-5">
-                <FaHome className="fs-4" />
+        <Navbar.Toggle aria-controls='basic-navbar-nav' />
+        <Navbar.Collapse id='basic-navbar-nav'>
+          <Nav className='ms-5 mt-2 d-flex justify-content-around align-items-center'>
+            <Link className='text-decoration-none nav-link' to='/Home'>
+              <div className='d-flex flex-column align-items-center me-3 ms-5'>
+                <FaHome className='fs-4' />
                 <p>Home</p>
               </div>
             </Link>
 
-            <Link to={'*'} className=" text-decoration-none nav-link">
-              <div className="d-flex flex-column align-items-center me-3">
-                <IoPeople className="fs-4" />
+            <Link to={'*'} className=' text-decoration-none nav-link'>
+              <div className='d-flex flex-column align-items-center me-3'>
+                <IoPeople className='fs-4' />
                 <p>Rete</p>
               </div>
             </Link>
-            <Link to="/search" className="text-decoration-none nav-link">
-              <div className="d-flex flex-column align-items-center me-3">
-                <MdWork className="fs-4" />
+            <Link to='/search' className='text-decoration-none nav-link'>
+              <div className='d-flex flex-column align-items-center me-3'>
+                <MdWork className='fs-4' />
                 <p>Lavoro</p>
               </div>
             </Link>
-            <Link to={'*'} className=" text-decoration-none nav-link">
-              <div className="d-flex flex-column align-items-center me-3">
-                <BsChatDotsFill className="fs-4" />
+            <Link to={'*'} className=' text-decoration-none nav-link'>
+              <div className='d-flex flex-column align-items-center me-3'>
+                <BsChatDotsFill className='fs-4' />
                 <p>Chat</p>
               </div>
             </Link>
-            <Link to={'*'} className=" text-decoration-none nav-link">
-              <div className="d-flex flex-column align-items-center me-3">
-                <FaBell className="fs-4" />
+            <Link to={'*'} className=' text-decoration-none nav-link'>
+              <div className='d-flex flex-column align-items-center me-3'>
+                <FaBell className='fs-4' />
                 <p>Notifiche</p>
               </div>
             </Link>
-            <Link className="nav-link text-decoration-none align-self-baseline">
-              <div className="d-flex flex-column align-items-center">
-                <DropdownProfile />
+
+            <Link to={'/'} className=' text-decoration-none nav-link'>
+              <div className='d-flex flex-column align-items-center me-3'>
+                <FaUser className='fs-4' />
+                <p>Profilo</p>
               </div>
             </Link>
-            <div className="vertical-line"></div>
+
+            {state.profileKey.key ? (
+              <Link className='nav-link text-decoration-none align-self-baseline'>
+                <div className='d-flex flex-column align-items-center'>
+                  <DropdownProfile />
+                </div>
+              </Link>
+            ) : (
+              <></>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -137,7 +151,7 @@ function MyNav() {
                   cursor: 'pointer',
                 }}
               >
-                <img src={result.image} width="30px" alt="" />
+                <img src={result.image} width='30px' alt='' />
                 <h5>User: {result.username}</h5>
                 <p>bio: {result.bio}</p>
                 <small>{result.title}</small>
