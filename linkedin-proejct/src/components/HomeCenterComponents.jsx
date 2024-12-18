@@ -214,7 +214,7 @@ export default function HomeCenterComponent() {
                 marginBottom: '10px',
               }}
             />
-            <input type="file" />
+
             <div style={{ textAlign: 'right' }}>
               <button
                 onClick={handlePostSubmit}
