@@ -1,5 +1,6 @@
 export const GET_PROFILE = 'GET_PROFILE'
 export const GET_EXPERIENCE = 'GET_EXPERIENCE'
+
 // export const PUSH_ID_USER = "PUSH_ID_USER";
 
 const myProfile = 'https://striveschool-api.herokuapp.com/api/profile/me'

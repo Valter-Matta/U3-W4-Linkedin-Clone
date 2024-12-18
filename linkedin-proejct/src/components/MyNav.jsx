@@ -37,30 +37,30 @@ function MyNav() {
               </div>
             </Link>
 
-            <Nav.Link>
+            <Link to={'*'} className=' text-decoration-none nav-link'>
               <div className='d-flex flex-column align-items-center me-3'>
                 <IoPeople className='fs-4' />
                 <p>Rete</p>
               </div>
-            </Nav.Link>
+            </Link>
             <Link to='/search' className='text-decoration-none nav-link'>
               <div className='d-flex flex-column align-items-center me-3'>
                 <MdWork className='fs-4' />
                 <p>Lavoro</p>
               </div>
             </Link>
-            <Nav.Link>
+            <Link to={'*'} className=' text-decoration-none nav-link'>
               <div className='d-flex flex-column align-items-center me-3'>
                 <BsChatDotsFill className='fs-4' />
                 <p>Chat</p>
               </div>
-            </Nav.Link>
-            <Nav.Link>
+            </Link>
+            <Link to={'*'} className=' text-decoration-none nav-link'>
               <div className='d-flex flex-column align-items-center me-3'>
                 <FaBell className='fs-4' />
                 <p>Notifiche</p>
               </div>
-            </Nav.Link>
+            </Link>
             <Link to={'/'} className='nav-link text-decoration-none'>
               <div className='d-flex flex-column align-items-center'>
                 <p>Tu</p>
