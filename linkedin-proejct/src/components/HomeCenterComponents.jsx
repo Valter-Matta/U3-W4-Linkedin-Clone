@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 export default function HomeCenterComponent() {
   const [posts, setPosts] = useState([])
@@ -8,6 +9,7 @@ export default function HomeCenterComponent() {
     image: '',
   })
 
+  const state = useSelector((state) => state)
   useEffect(() => {
     fetchPosts()
   }, [])
@@ -15,8 +17,7 @@ export default function HomeCenterComponent() {
   const fetchPosts = () => {
     fetch('https://striveschool-api.herokuapp.com/api/posts/', {
       headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYxNGIwOTc0YTg2ODAwMTVkYjU1MjciLCJpYXQiOjE3MzQ0Mjk0NDksImV4cCI6MTczNTYzOTA0OX0.mE5mKRYlk-WIPHgNEPOuGdut9pE2Lh53UeLEQHrDUTI',
+        Authorization: `Bearer ${state.profileKey.key}`,
       },
     })
       .then((response) => response.json())
@@ -36,8 +37,7 @@ export default function HomeCenterComponent() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYxNGIwOTc0YTg2ODAwMTVkYjU1MjciLCJpYXQiOjE3MzQ0Mjk0NDksImV4cCI6MTczNTYzOTA0OX0.mE5mKRYlk-WIPHgNEPOuGdut9pE2Lh53UeLEQHrDUTI',
+        Authorization: `Bearer ${state.profileKey.key}`,
       },
       body: JSON.stringify(newPostData),
     })
@@ -55,7 +55,7 @@ export default function HomeCenterComponent() {
   }
 
   return (
-    <div style={{ padding: '10px', borderRadius: '10px' }} className="mt-5">
+    <div style={{ padding: '10px', borderRadius: '10px' }} className='mt-5'>
       <div
         style={{
           backgroundColor: 'white',
@@ -66,8 +66,8 @@ export default function HomeCenterComponent() {
         }}
       >
         <input
-          type="text"
-          placeholder="Crea un post"
+          type='text'
+          placeholder='Crea un post'
           style={{
             width: '100%',
             padding: '10px',
@@ -146,7 +146,7 @@ export default function HomeCenterComponent() {
             {post.image && (
               <img
                 src={post.image}
-                alt="post"
+                alt='post'
                 style={{
                   width: '100%',
                   marginTop: '10px',
@@ -185,7 +185,7 @@ export default function HomeCenterComponent() {
           >
             <h3>Crea un post</h3>
             <textarea
-              placeholder="Scrivi il tuo post"
+              placeholder='Scrivi il tuo post'
               value={newPost.text}
               onChange={(e) => setNewPost({ ...newPost, text: e.target.value })}
               style={{
@@ -198,8 +198,8 @@ export default function HomeCenterComponent() {
               }}
             />
             <input
-              type="text"
-              placeholder="URL immagine (facoltativo)"
+              type='text'
+              placeholder='URL immagine (facoltativo)'
               value={newPost.image}
               onChange={(e) =>
                 setNewPost({ ...newPost, image: e.target.value })
