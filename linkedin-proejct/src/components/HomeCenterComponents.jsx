@@ -126,9 +126,22 @@ export default function HomeCenterComponent() {
               }}
             >
               <div>
-                <h4 style={{ margin: 0 }}>
-                  {post.username || 'Utente sconosciuto'}
-                </h4>
+                <div className="d-flex align-items-center">
+                  <img
+                    src="https://e7.pngegg.com/pngimages/81/570/png-clipart-profile-logo-computer-icons-user-user-blue-heroes-thumbnail.png"
+                    alt="profile"
+                    style={{
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '50%',
+                      marginRight: '10px',
+                    }}
+                  />
+                  <h4 style={{ margin: 0 }}>
+                    {post.username || 'Utente sconosciuto'}
+                  </h4>
+                </div>
+
                 <p style={{ margin: 0, color: 'gray', fontSize: '12px' }}>
                   {post.createdAt
                     ? new Date(post.createdAt).toLocaleDateString()
