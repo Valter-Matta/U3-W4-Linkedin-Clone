@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 export default function HomeCenterComponent() {
   const [posts, setPosts] = useState([])
@@ -8,6 +9,7 @@ export default function HomeCenterComponent() {
     text: '',
     image: '',
   })
+  const profileState = useSelector((reduxState) => reduxState.profile.users)
 
   const state = useSelector((state) => state)
   useEffect(() => {
@@ -55,7 +57,7 @@ export default function HomeCenterComponent() {
   }
 
   return (
-    <div style={{ padding: '10px', borderRadius: '10px' }} className='mt-5'>
+    <div style={{ padding: '10px', borderRadius: '10px' }} className="mt-5">
       <div
         style={{
           backgroundColor: 'white',
@@ -65,18 +67,34 @@ export default function HomeCenterComponent() {
           marginBottom: '15px',
         }}
       >
-        <input
-          type='text'
-          placeholder='Crea un post'
-          style={{
-            width: '100%',
-            padding: '10px',
-            borderRadius: '20px',
-            border: '1px solid #ccc',
-            marginBottom: '10px',
-          }}
-          onClick={() => setShowModal(true)}
-        />
+        <div className="d-flex">
+          <Link to="/">
+            <img
+              src={profileState.image}
+              alt="profile"
+              style={{
+                width: '50px',
+                height: '50px',
+                borderRadius: '50%',
+                marginRight: '10px',
+              }}
+            />
+          </Link>
+
+          <input
+            type="text"
+            placeholder="Crea un post"
+            style={{
+              width: '100%',
+              padding: '10px',
+              borderRadius: '20px',
+              border: '1px solid #ccc',
+              marginBottom: '10px',
+            }}
+            onClick={() => setShowModal(true)}
+          />
+        </div>
+
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <span style={{ cursor: 'pointer', color: '#0073b1' }}>
             📷 Contenuti multimediali
@@ -107,16 +125,6 @@ export default function HomeCenterComponent() {
                 marginBottom: '10px',
               }}
             >
-              {/* <img
-                src="https://via.placeholder.com/50"
-                alt="profile"
-                style={{
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  marginRight: '10px',
-                }}
-              /> */}
               <div>
                 <h4 style={{ margin: 0 }}>
                   {post.username || 'Utente sconosciuto'}
@@ -146,7 +154,7 @@ export default function HomeCenterComponent() {
             {post.image && (
               <img
                 src={post.image}
-                alt='post'
+                alt="post"
                 style={{
                   width: '100%',
                   marginTop: '10px',
@@ -185,7 +193,7 @@ export default function HomeCenterComponent() {
           >
             <h3>Crea un post</h3>
             <textarea
-              placeholder='Scrivi il tuo post'
+              placeholder="Scrivi il tuo post"
               value={newPost.text}
               onChange={(e) => setNewPost({ ...newPost, text: e.target.value })}
               style={{
@@ -198,8 +206,8 @@ export default function HomeCenterComponent() {
               }}
             />
             <input
-              type='text'
-              placeholder='URL immagine (facoltativo)'
+              type="text"
+              placeholder="URL immagine (facoltativo)"
               value={newPost.image}
               onChange={(e) =>
                 setNewPost({ ...newPost, image: e.target.value })

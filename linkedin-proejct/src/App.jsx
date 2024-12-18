@@ -20,22 +20,22 @@ function App() {
         <Container>
           <Routes>
             <Route
-              path='/'
+              path="/"
               element={
                 <Row>
-                  <div className='p-0 col-12 col-lg-8'>
+                  <div className="p-0 col-12 col-lg-8">
                     <ProfilePage />
                   </div>
-                  <div className='col-12 col-lg-4'>
+                  <div className="col-12 col-lg-4">
                     <ProfileAside />
                   </div>
                 </Row>
               }
             />
-            <Route path='/Home' element={<HomeMainComponent />} />
-            <Route path='/search' element={<SearchJobs />} />
-            <Route path='/jobDetail/:company' element={<JobDetail />} />
-            <Route path='*' element={<PageNotFound />} />
+            <Route path="/Home" element={<HomeMainComponent />} />
+            <Route path="/search" element={<SearchJobs />} />
+            <Route path="/jobDetail/:company" element={<JobDetail />} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Container>
       </main>
