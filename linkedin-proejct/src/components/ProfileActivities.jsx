@@ -19,7 +19,9 @@ const ProfileActivities = () => {
 				</div>
 			</div>
 			<div className="px-4 d-flex flex-column justify-content-between ">
-				<p className=" fs-6 fw-medium text-primary pb-2 m-0">x follower</p>
+				<p className=" fs-6 fw-medium text-primary pb-2 m-0">
+					{Math.floor(Math.random() * 10)} follower
+				</p>
 				<p className="m-0 fw-semibold">Non hai ancora pubblicato nulla</p>
 				<p className="m-0 pb-2">i post che condividi appariranno qui</p>
 			</div>
