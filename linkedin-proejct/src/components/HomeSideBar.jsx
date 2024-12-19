@@ -1,25 +1,50 @@
 import { MdPersonAddAlt1 } from 'react-icons/md'
 import { FaBookmark } from 'react-icons/fa6'
 import HomeBottomSidebar from './HomeBottomSideBar'
+import { useSelector } from 'react-redux'
+import { FaMapMarkerAlt } from 'react-icons/fa'
 
 const HomeSideBar = () => {
+  const state = useSelector((reduxState) => reduxState.profile.users)
+
   return (
     <>
       <div className="sidebar2 mt-5">
         <div
-          style={{ borderRadius: '20px 20px 0 0' }}
-          className="bg-primary d-flex justify-content-center"
+          style={{
+            borderRadius: '20px 20px 0 0',
+            backgroundImage: `url(${
+              state.profile
+                ? `${state.profile}?${new Date().getTime()}`
+                : state.image
+            })`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+          className="d-flex justify-content-center"
         >
           <img
-            style={{ borderRadius: '50%' }}
-            src="https://placedog.net/60/60"
-            className="picture-sidebar"
-            alt=""
+            style={{ borderRadius: '50%', width: '60px', height: '60px' }}
+            src={
+              state.profile
+                ? `${state.profile}?${new Date().getTime()}`
+                : state.image
+            }
+            className="picture-sidebar border border-white border-3"
+            alt="profile"
           />
         </div>
         <div className="mt-5 text-center">
-          <h4>Utente Linkedin</h4>
-          <p>Lavoro corrente</p>
+          <h4>
+            {state.name} {state.surname}
+          </h4>
+          <p>Username: {state.username}</p>
+          <p>Professione: {state.title}</p>
+          <p>E-mail: {state.email}</p>
+          <div className="d-flex justify-content-center ">
+            <FaMapMarkerAlt className="mt-1 me-2" />
+            <p>{state.area}</p>
+          </div>
           <hr />
         </div>
         <div className="d-flex align-items-center justify-content-between ms-2">

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 export default function HomeCenterComponent() {
   const [posts, setPosts] = useState([])
@@ -7,7 +9,9 @@ export default function HomeCenterComponent() {
     text: '',
     image: '',
   })
+  const profileState = useSelector((reduxState) => reduxState.profile.users)
 
+  const state = useSelector((state) => state)
   useEffect(() => {
     fetchPosts()
   }, [])
@@ -15,8 +19,7 @@ export default function HomeCenterComponent() {
   const fetchPosts = () => {
     fetch('https://striveschool-api.herokuapp.com/api/posts/', {
       headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYxNGIwOTc0YTg2ODAwMTVkYjU1MjciLCJpYXQiOjE3MzQ0Mjk0NDksImV4cCI6MTczNTYzOTA0OX0.mE5mKRYlk-WIPHgNEPOuGdut9pE2Lh53UeLEQHrDUTI',
+        Authorization: `Bearer ${state.profileKey.key}`,
       },
     })
       .then((response) => response.json())
@@ -36,8 +39,7 @@ export default function HomeCenterComponent() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYxNGIwOTc0YTg2ODAwMTVkYjU1MjciLCJpYXQiOjE3MzQ0Mjk0NDksImV4cCI6MTczNTYzOTA0OX0.mE5mKRYlk-WIPHgNEPOuGdut9pE2Lh53UeLEQHrDUTI',
+        Authorization: `Bearer ${state.profileKey.key}`,
       },
       body: JSON.stringify(newPostData),
     })
@@ -65,18 +67,34 @@ export default function HomeCenterComponent() {
           marginBottom: '15px',
         }}
       >
-        <input
-          type="text"
-          placeholder="Crea un post"
-          style={{
-            width: '100%',
-            padding: '10px',
-            borderRadius: '20px',
-            border: '1px solid #ccc',
-            marginBottom: '10px',
-          }}
-          onClick={() => setShowModal(true)}
-        />
+        <div className="d-flex">
+          <Link to="/">
+            <img
+              src={profileState.image}
+              alt="profile"
+              style={{
+                width: '50px',
+                height: '50px',
+                borderRadius: '50%',
+                marginRight: '10px',
+              }}
+            />
+          </Link>
+
+          <input
+            type="text"
+            placeholder="Crea un post"
+            style={{
+              width: '100%',
+              padding: '10px',
+              borderRadius: '20px',
+              border: '1px solid #ccc',
+              marginBottom: '10px',
+            }}
+            onClick={() => setShowModal(true)}
+          />
+        </div>
+
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <span style={{ cursor: 'pointer', color: '#0073b1' }}>
             📷 Contenuti multimediali
@@ -107,20 +125,23 @@ export default function HomeCenterComponent() {
                 marginBottom: '10px',
               }}
             >
-              {/* <img
-                src="https://via.placeholder.com/50"
-                alt="profile"
-                style={{
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  marginRight: '10px',
-                }}
-              /> */}
               <div>
-                <h4 style={{ margin: 0 }}>
-                  {post.username || 'Utente sconosciuto'}
-                </h4>
+                <div className="d-flex align-items-center">
+                  <img
+                    src="https://e7.pngegg.com/pngimages/81/570/png-clipart-profile-logo-computer-icons-user-user-blue-heroes-thumbnail.png"
+                    alt="profile"
+                    style={{
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '50%',
+                      marginRight: '10px',
+                    }}
+                  />
+                  <h4 style={{ margin: 0 }}>
+                    {post.username || 'Utente sconosciuto'}
+                  </h4>
+                </div>
+
                 <p style={{ margin: 0, color: 'gray', fontSize: '12px' }}>
                   {post.createdAt
                     ? new Date(post.createdAt).toLocaleDateString()
