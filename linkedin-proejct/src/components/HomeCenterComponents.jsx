@@ -19,6 +19,15 @@ export default function HomeCenterComponent() {
   const state = useSelector((state) => state)
 
   useEffect(() => {
+    // Disabilita lo scrolling quando il modale è aperto
+    if (showModal) {
+      document.body.classList.add('modal-open')
+    } else {
+      document.body.classList.remove('modal-open')
+    }
+  }, [showModal])
+
+  useEffect(() => {
     fetchPosts()
   }, [])
 
@@ -247,7 +256,7 @@ export default function HomeCenterComponent() {
                 </p>
               </div>
             </div>
-            <p
+            <h4
               style={{
                 margin: 0,
                 overflow: 'hidden',
@@ -257,11 +266,10 @@ export default function HomeCenterComponent() {
                 WebkitBoxOrient: 'vertical',
                 maxHeight: '4.5em',
                 lineHeight: '1.5em',
-                color: 'gray',
               }}
             >
               {post.text || 'Contenuto non disponibile'}
-            </p>
+            </h4>
             {post.image && (
               <img
                 src={post.image}
@@ -273,6 +281,7 @@ export default function HomeCenterComponent() {
                 }}
               />
             )}
+            <hr />
 
             <div>
               <h5>Commenti:</h5>
@@ -318,7 +327,8 @@ export default function HomeCenterComponent() {
             )}
 
             <div style={{ marginTop: '15px' }}>
-              <textarea
+              <input
+                type="text"
                 placeholder="Scrivi il tuo commento"
                 value={newComment[post._id]?.text || ''}
                 onChange={(e) => handleCommentChange(post._id, e)}
@@ -334,7 +344,10 @@ export default function HomeCenterComponent() {
               <div className="d-flex">
                 <input
                   type="number"
-                  placeholder="Rating"
+                  min="1"
+                  max="5"
+                  step="1"
+                  placeholder="Rate"
                   value={rating[post._id] || ''}
                   onChange={(e) => handleRatingChange(post._id, e.target.value)}
                   style={{
@@ -378,6 +391,7 @@ export default function HomeCenterComponent() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            zIndex: '1100',
           }}
         >
           <div
