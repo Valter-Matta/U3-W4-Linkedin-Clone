@@ -1,74 +1,73 @@
 .sidebar2 {
-  width: 300px;
-  font-family: Arial, sans-serif;
-  color: #333;
-  background-color: #fff;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	font-family: Arial, sans-serif;
+	color: #333;
+	background-color: #fff;
+	overflow: hidden;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .featured h3 {
-  font-size: 1.2em;
-  margin-bottom: 5px;
+	font-size: 1.2em;
+	margin-bottom: 5px;
 }
 
 .subtitle {
-  font-size: 0.9em;
-  color: #666;
-  margin-bottom: 10px;
+	font-size: 0.9em;
+	color: #666;
+	margin-bottom: 10px;
 }
 
 .news-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 .news-list li {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .news-title {
-  display: block;
-  font-weight: bold;
+	display: block;
+	font-weight: bold;
 }
 
 .news-meta {
-  font-size: 0.8em;
-  color: #666;
+	font-size: 0.8em;
+	color: #666;
 }
 
 .view-more {
-  color: #0073b1;
-  text-decoration: none;
-  font-size: 0.9em;
+	color: #0073b1;
+	text-decoration: none;
+	font-size: 0.9em;
 }
 
 .games {
-  margin-top: 20px;
+	margin-top: 20px;
 }
 
 .game {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
 }
 
 .game-icon {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  margin-right: 10px;
+	width: 20px;
+	height: 20px;
+	border-radius: 4px;
+	margin-right: 10px;
 }
 
 .game-name {
-  font-weight: bold;
-  margin-right: 5px;
+	font-weight: bold;
+	margin-right: 5px;
 }
 
 .game-description {
-  font-size: 0.9em;
-  color: #666;
+	font-size: 0.9em;
+	color: #666;
 }

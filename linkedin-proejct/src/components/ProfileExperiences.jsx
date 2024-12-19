@@ -84,11 +84,10 @@ const ProfileExperiences = () => {
 									<h1 className="fs-4 m-0">{exp.role}</h1>
 								</div>
 								<div className="d-flex">
-									{/* Bottone per aggiungere una nuova esperienza */}
 									<div className="pen d-flex align-items-center me-3">
 										<button
 											className="text-decoration-none pen border-0 bg-transparent"
-											onClick={() => setShowForm(true)} // Mostra il form
+											onClick={() => setShowForm(true)}
 										>
 											<FaPlus className="custom-hover" />
 										</button>
@@ -108,7 +107,7 @@ const ProfileExperiences = () => {
 													description: exp.description,
 													area: exp.area,
 												});
-											}} // Mostra il form
+											}}
 										>
 											<FaPen className="custom-hover" />
 										</button>
@@ -124,11 +123,29 @@ const ProfileExperiences = () => {
 										alt="profile-pic"
 									/>
 								</div>
-								<div className="px-2 d-flex flex-column justify-content-between">
+								<div className="px-2 d-flex flex-column justify-content-between w-100">
 									<p className="fs-6 fw-medium text-primary  m-0">
 										Presso {exp.company} , {exp.area}
 									</p>
 									<p className="fs-6 fw-lightpb-2 m-0">{exp.description}</p>
+									<div className="d-flex justify-content-between">
+										<p className="fs-6 fw-lightpb-2 m-0">
+											dal:{" "}
+											{new Intl.DateTimeFormat("it-IT", {
+												day: "2-digit",
+												month: "2-digit",
+												year: "numeric",
+											}).format(new Date(exp.startDate))}
+										</p>
+										<p className="fs-6 fw-lightpb-2 m-0">
+											al:{" "}
+											{new Intl.DateTimeFormat("it-IT", {
+												day: "2-digit",
+												month: "2-digit",
+												year: "numeric",
+											}).format(new Date(exp.endDate))}
+										</p>
+									</div>
 								</div>
 							</div>
 						</Card>
