@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { IoMdPhotos } from 'react-icons/io'
+import { FaRegStar } from 'react-icons/fa'
 
 export default function HomeCenterComponent() {
   const [posts, setPosts] = useState([])
@@ -9,12 +11,40 @@ export default function HomeCenterComponent() {
     text: '',
     image: '',
   })
+  const [imageFile, setImageFile] = useState(null)
+  const [comments, setComments] = useState({})
+  const [newComment, setNewComment] = useState({}) // Stato per i nuovi commenti separati per post
+  const [rating, setRating] = useState({}) // Stato per il rating separato per post
   const profileState = useSelector((reduxState) => reduxState.profile.users)
-
   const state = useSelector((state) => state)
+
   useEffect(() => {
     fetchPosts()
   }, [])
+
+  useEffect(() => {
+    async function fetchComments() {
+      const response = await fetch(
+        'https://striveschool-api.herokuapp.com/api/comments/',
+        {
+          headers: {
+            Authorization: `Bearer ${state.profileKey.key}`,
+          },
+        }
+      )
+      if (response.ok) {
+        const data = await response.json()
+
+        const commentsByPostId = data.reduce((acc, comment) => {
+          ;(acc[comment.elementId] = acc[comment.elementId] || []).push(comment)
+          return acc
+        }, {})
+        setComments(commentsByPostId)
+        console.log('Commenti ricevuti:', commentsByPostId)
+      }
+    }
+    fetchComments()
+  }, [state.profileKey.key, newComment])
 
   const fetchPosts = () => {
     fetch('https://striveschool-api.herokuapp.com/api/posts/', {
@@ -29,31 +59,99 @@ export default function HomeCenterComponent() {
       .catch((error) => console.error('Errore nel recuperare i post:', error))
   }
 
-  const handlePostSubmit = () => {
-    const newPostData = {
-      text: newPost.text,
-      image: newPost.image,
+  const handlePostSubmit = async () => {
+    try {
+      const postResponse = await fetch(
+        'https://striveschool-api.herokuapp.com/api/posts',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${state.profileKey.key}`,
+          },
+          body: JSON.stringify({ text: newPost.text }),
+        }
+      )
+
+      if (!postResponse.ok) throw new Error('Errore nella creazione del post')
+
+      const createdPost = await postResponse.json()
+
+      if (imageFile) {
+        const formDataToSend = new FormData()
+        formDataToSend.append('post', imageFile)
+
+        const imageResponse = await fetch(
+          `https://striveschool-api.herokuapp.com/api/posts/${createdPost._id}`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${state.profileKey.key}`,
+            },
+            body: formDataToSend,
+          }
+        )
+
+        if (!imageResponse.ok)
+          throw new Error('Errore nel caricamento immagine')
+      }
+
+      console.log('Post creato con successo!')
+      fetchPosts()
+      setShowModal(false)
+      setNewPost({ text: '', image: '' })
+      setImageFile(null)
+    } catch (error) {
+      console.error('Errore nel creare il post:', error)
+      alert('Si è verificato un errore. Riprova!')
+    }
+  }
+
+  const handleCommentChange = (postId, e) => {
+    setNewComment({
+      ...newComment,
+      [postId]: { ...newComment[postId], text: e.target.value },
+    })
+  }
+
+  const handleRatingChange = (postId, rate) => {
+    setRating({
+      ...rating,
+      [postId]: rate,
+    })
+  }
+
+  const handleCommentSubmit = async (postId) => {
+    const commentData = {
+      comment: newComment[postId]?.text || '',
+      rate: rating[postId] || 0,
+      elementId: postId,
     }
 
-    fetch('https://striveschool-api.herokuapp.com/api/posts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${state.profileKey.key}`,
-      },
-      body: JSON.stringify(newPostData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Post creato:', data)
-        fetchPosts()
-        setShowModal(false)
-        setNewPost({ text: '', image: '' })
-      })
-      .catch((error) => {
-        console.error('Errore nel creare il post:', error)
-        alert('Si è verificato un errore. Riprova!')
-      })
+    try {
+      const response = await fetch(
+        'https://striveschool-api.herokuapp.com/api/comments/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${state.profileKey.key}`,
+          },
+          body: JSON.stringify(commentData),
+        }
+      )
+
+      if (response.ok) {
+        fetchPosts() // Ricarica i post per ottenere il nuovo commento
+        setNewComment({ ...newComment, [postId]: { text: '' } }) // Reset del testo del commento
+        setRating({ ...rating, [postId]: 0 }) // Reset del rating
+      } else {
+        alert("Errore nell'invio del commento")
+      }
+    } catch (error) {
+      console.error('Errore nel commentare:', error)
+      alert('Si è verificato un errore nel commento')
+    }
   }
 
   return (
@@ -175,6 +273,93 @@ export default function HomeCenterComponent() {
                 }}
               />
             )}
+
+            <div>
+              <h5>Commenti:</h5>
+            </div>
+
+            {comments[post._id] && comments[post._id].length > 0 ? (
+              <div style={{ marginTop: '15px' }}>
+                {comments[post._id].map((comment) => (
+                  <div
+                    key={comment._id}
+                    style={{ padding: '5px 0', borderBottom: '1px solid #ccc' }}
+                  >
+                    <div className="d-flex flex-column">
+                      <div className="d-flex">
+                        <strong>{comment.author}</strong>:
+                        <p>{comment.comment}</p>
+                      </div>
+                      <div className="d-flex">
+                        <p>{comment.rate}</p>
+                        <FaRegStar className="text-warning" />
+                      </div>
+                      <small>
+                        {new Date(comment.createdAt)
+                          .toLocaleString('it-IT', {
+                            timeZone: 'Europe/Rome',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit',
+                          })
+                          .slice(0, -3)}
+                      </small>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p style={{ color: 'gray', fontStyle: 'italic' }}>
+                Nessun commento disponibile
+              </p>
+            )}
+
+            <div style={{ marginTop: '15px' }}>
+              <textarea
+                placeholder="Scrivi il tuo commento"
+                value={newComment[post._id]?.text || ''}
+                onChange={(e) => handleCommentChange(post._id, e)}
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  borderRadius: '10px',
+                  border: '1px solid #ccc',
+                  marginBottom: '10px',
+                  minHeight: '50px',
+                }}
+              />
+              <div className="d-flex">
+                <input
+                  type="number"
+                  placeholder="Rating"
+                  value={rating[post._id] || ''}
+                  onChange={(e) => handleRatingChange(post._id, e.target.value)}
+                  style={{
+                    width: '60px',
+                    padding: '5px',
+                    borderRadius: '5px',
+                    marginRight: '10px',
+                    border: '1px solid #ccc',
+                  }}
+                />
+                <button
+                  onClick={() => handleCommentSubmit(post._id)}
+                  style={{
+                    backgroundColor: '#0073b1',
+                    color: 'white',
+                    padding: '10px 15px',
+                    borderRadius: '5px',
+                    border: 'none',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Pubblica
+                </button>
+              </div>
+            </div>
           </div>
         ))
       ) : (
@@ -218,19 +403,17 @@ export default function HomeCenterComponent() {
                 minHeight: '100px',
               }}
             />
+            <label style={{ cursor: 'pointer' }} htmlFor="file">
+              <IoMdPhotos style={{ marginRight: '10px', fontSize: '20px' }} />
+              Carica un'immagine
+            </label>
             <input
-              type="text"
-              placeholder="URL immagine (facoltativo)"
-              value={newPost.image}
-              onChange={(e) =>
-                setNewPost({ ...newPost, image: e.target.value })
-              }
+              id="file"
+              type="file"
+              onChange={(e) => setImageFile(e.target.files[0])}
               style={{
-                width: '100%',
-                padding: '10px',
-                borderRadius: '10px',
-                border: '1px solid #ccc',
                 marginBottom: '10px',
+                display: 'none',
               }}
             />
 
