@@ -31,7 +31,7 @@ const ProfileAnalitics = () => {
 	}, [ID, getmyProfile]);
 
 	return (
-		<Card className="pt-3 mt-2">
+		<Card className="pt-3 my-3">
 			<div className="px-4">
 				<h1 className="fs-4 m-0">Analisi</h1>
 				<p className="m-0 pb-2">
