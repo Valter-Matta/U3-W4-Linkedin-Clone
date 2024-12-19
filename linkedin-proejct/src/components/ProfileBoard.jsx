@@ -23,8 +23,10 @@ const ProfileBoard = () => {
 
 	const setImageProfile = async e => {
 		e.preventDefault();
+
 		const formDataToSend = new FormData();
 		formDataToSend.append("profile", formData.profile);
+		console.log(formData);
 
 		try {
 			const response = await fetch(

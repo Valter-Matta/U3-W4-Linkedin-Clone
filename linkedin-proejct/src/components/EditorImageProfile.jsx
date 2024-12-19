@@ -35,7 +35,7 @@ const EditorImageProfile = ({
 								type="file"
 								name="profile"
 								onChange={handleChange}
-								placeholder="URL Immagine"
+								placeholder="Scegli immagine"
 								accept="image/*"
 							/>
 						</Form.Group>
