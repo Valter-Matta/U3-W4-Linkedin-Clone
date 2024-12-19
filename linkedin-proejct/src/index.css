@@ -39,9 +39,9 @@ body.modal-open {
 }
 
 .start-dropdown {
-	position: relative;
-	top: 25px;
-	right: -200px;
-	display: block;
-	margin-bottom: 3rem;
+  position: relative;
+  top: 25px;
+  right: -200px;
+  display: block;
+  margin-bottom: 3rem;
 }

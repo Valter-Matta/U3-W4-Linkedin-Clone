@@ -179,7 +179,7 @@ function MyNav() {
             return (
               <Link
                 key={result._id}
-                to={`/user/${result._id}`} // Aggiunto link verso la pagina UserResult
+                to={`/user/${result._id}`}
                 style={{
                   textDecoration: 'none',
                   color: 'inherit',

@@ -19,7 +19,6 @@ export default function HomeCenterComponent() {
   const state = useSelector((state) => state)
 
   useEffect(() => {
-    // Disabilita lo scrolling quando il modale è aperto
     if (showModal) {
       document.body.classList.add('modal-open')
     } else {
@@ -297,7 +296,7 @@ export default function HomeCenterComponent() {
                     <div className="d-flex flex-column">
                       <div className="d-flex">
                         <strong>{comment.author}</strong>:
-                        <p>{comment.comment}</p>
+                        <p className="ms-1">{comment.comment}</p>
                       </div>
                       <div className="d-flex">
                         <p>{comment.rate}</p>
