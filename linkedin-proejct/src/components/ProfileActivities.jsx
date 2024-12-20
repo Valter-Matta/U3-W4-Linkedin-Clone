@@ -105,6 +105,37 @@ export default function ProfileActivities() {
     }
   }
 
+  const deletePost = async (postId) => {
+    const confirmDelete = window.confirm(
+      'Sei sicuro di voler eliminare questo post? Questa azione non può essere annullata.'
+    )
+
+    if (!confirmDelete) {
+      return
+    }
+    try {
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/posts/${postId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${state.profileKey.key}`,
+          },
+        }
+      )
+
+      if (response.ok) {
+        setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId))
+        alert('Post eliminato con successo!')
+      } else {
+        alert("Errore durante l'eliminazione del post")
+      }
+    } catch (error) {
+      console.error("Errore durante l'eliminazione del post:", error)
+      alert("Si è verificato un errore durante l'eliminazione del post")
+    }
+  }
+
   return posts
     .filter((post) => post.user._id === userID)
     .map((post) => (
@@ -256,6 +287,20 @@ export default function ProfileActivities() {
               }}
             >
               Pubblica
+            </button>
+            <button
+              className="ms-2"
+              onClick={() => deletePost(post._id)}
+              style={{
+                backgroundColor: 'red',
+                color: 'white',
+                padding: '5px 10px',
+                borderRadius: '5px',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              Elimina
             </button>
           </div>
         </div>
