@@ -67,14 +67,6 @@ const SearchJobs = () => {
                   onChange={handleChange}
                 />
                 <Button variant='outline-primary'>Cerca</Button>
-                <Button
-                  variant='outline-primary'
-                  onClick={() => {
-                    window.location.reload()
-                  }}
-                >
-                  Nuova Ricerca
-                </Button>
               </InputGroup>
             </Form>
           </Col>
