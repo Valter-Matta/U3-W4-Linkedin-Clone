@@ -62,7 +62,8 @@ export default function HomeCenterComponent() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setPosts(data.reverse())
+        const limitedPosts = data.reverse().slice(0, 100)
+        setPosts(limitedPosts)
       })
       .catch((error) => console.error('Errore nel recuperare i post:', error))
   }
@@ -83,7 +84,7 @@ export default function HomeCenterComponent() {
 
       if (!postResponse.ok) throw new Error('Errore nella creazione del post')
 
-      const createdPost = await postResponse.json()
+      let createdPost = await postResponse.json()
 
       if (imageFile) {
         const formDataToSend = new FormData()
@@ -102,10 +103,13 @@ export default function HomeCenterComponent() {
 
         if (!imageResponse.ok)
           throw new Error('Errore nel caricamento immagine')
+
+        const updatedPost = await imageResponse.json()
+        createdPost = { ...createdPost, image: updatedPost.image }
       }
 
       console.log('Post creato con successo!')
-      fetchPosts()
+      setPosts((prevPosts) => [createdPost, ...prevPosts.slice(0, 99)])
       setShowModal(false)
       setNewPost({ text: '', image: '' })
       setImageFile(null)
