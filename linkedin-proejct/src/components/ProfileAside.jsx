@@ -5,15 +5,12 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const ProfileAside = () => {
   const [profiles, setProfiles] = useState([])
-  const [clicked, setClicked] = useState(false)
+  const [showAll, setShowAll] = useState(false)
 
   const navigate = useNavigate()
 
-  const handleShowAll = () => {
-    setClicked(true)
-  }
-
   const PROFILES_URL = 'https://striveschool-api.herokuapp.com/api/profile/'
+
   const getProfiles = async () => {
     try {
       const response = await fetch(PROFILES_URL, {
@@ -23,30 +20,29 @@ const ProfileAside = () => {
       })
       if (response.ok) {
         const arrayOfProfiles = await response.json()
-        setProfiles(arrayOfProfiles)
+        const shuffledProfiles = arrayOfProfiles.sort(() => Math.random() - 0.5)
+        setProfiles(shuffledProfiles)
       } else {
-        throw new Error('errore nella richiesta!')
+        throw new Error('Errore nella richiesta!')
       }
     } catch (error) {
-      console.log('error', error)
+      console.log('Errore:', error)
     }
   }
 
   useEffect(() => {
     getProfiles()
   }, [])
-  if (profiles.length !== 0) {
-    console.log('array dei profili ', profiles)
-  }
+
   return (
-    <Container className='maxWidthLgScreen my-3'>
+    <Container className="maxWidthLgScreen my-3">
       <Card>
         <Card.Body>
           <div>
-            <Card.Title className=' d-flex justify-content-between align-items-center mb-0'>
+            <Card.Title className="d-flex justify-content-between align-items-center mb-0">
               Lingua del profilo
-              <Button variant='outline' className=' fs-5'>
-                <i className='bi bi-pencil text-black'></i>
+              <Button variant="outline" className="fs-5">
+                <i className="bi bi-pencil text-black"></i>
               </Button>
             </Card.Title>
             <Card.Text style={{ fontSize: '0.9rem', color: 'gray' }}>
@@ -55,10 +51,10 @@ const ProfileAside = () => {
             <hr />
           </div>
           <div>
-            <Card.Title className=' d-flex justify-content-between align-items-center'>
+            <Card.Title className="d-flex justify-content-between align-items-center">
               Profilo pubblico e URL
-              <Button variant='outline' className=' fs-5'>
-                <i className='bi bi-pencil text-black'></i>
+              <Button variant="outline" className="fs-5">
+                <i className="bi bi-pencil text-black"></i>
               </Button>
             </Card.Title>
             <Card.Text style={{ fontSize: '0.9rem', color: 'gray' }}>
@@ -68,9 +64,9 @@ const ProfileAside = () => {
         </Card.Body>
       </Card>
 
-      <Card className=' mt-3'>
-        <Card.Title className='p-3'>
-          <p className=' mb-0 fw-semibold' style={{ fontSize: '1rem' }}>
+      <Card className="mt-3">
+        <Card.Title className="p-3">
+          <p className="mb-0 fw-semibold" style={{ fontSize: '1rem' }}>
             Persone che potresti conoscere
           </p>
           <p style={{ fontSize: '0.9rem', color: 'gray' }}>
@@ -78,31 +74,35 @@ const ProfileAside = () => {
           </p>
         </Card.Title>
         {profiles &&
-          profiles.slice(0, 6).map((singleProfile, i) => {
-            return (
+          profiles
+            .slice(0, showAll ? Math.min(profiles.length, 15) : 6)
+            .map((singleProfile, i) => (
               <Card.Body key={i}>
                 <Container fluid>
                   <Row>
                     <Col xs={4}>
                       <Card.Img
-                        src={singleProfile.image}
-                        className=' rounded-pill'
+                        src={
+                          singleProfile.image ||
+                          'https://e7.pngegg.com/pngimages/81/570/png-clipart-profile-logo-computer-icons-user-user-blue-heroes-thumbnail.png'
+                        }
+                        className="rounded-pill"
                       />
                     </Col>
-                    <Col xs={8} className=' px-0'>
+                    <Col xs={8} className="px-0">
                       <Link
-                        className=' text-decoration-none text-black'
+                        className="text-decoration-none text-black"
                         to={`/user/${singleProfile._id}`}
                       >
                         <h6
                           style={{ width: 'max-content' }}
-                          className='overStyleProfileSuggestName'
+                          className="overStyleProfileSuggestName"
                         >
                           {singleProfile.name}
                         </h6>
                       </Link>
                       <p
-                        className='btn text-truncate p-0'
+                        className="btn text-truncate p-0"
                         style={{ fontSize: '0.9rem', maxWidth: '100%' }}
                       >
                         {singleProfile.bio}
@@ -112,10 +112,10 @@ const ProfileAside = () => {
                           onClick={() => {
                             navigate(`/user/${singleProfile._id}`)
                           }}
-                          variant='outline'
-                          className=' fw-semibold border border-1 border-black rounded-5'
+                          variant="outline"
+                          className="fw-semibold border border-1 border-black rounded-5"
                         >
-                          <i className='bi bi-person-fill-add'></i> Collegati
+                          <i className="bi bi-person-fill-add"></i> Collegati
                         </Button>
                       </div>
                     </Col>
@@ -123,61 +123,15 @@ const ProfileAside = () => {
                 </Container>
                 <hr />
               </Card.Body>
-            )
-          })}
+            ))}
 
-        {profiles &&
-          clicked &&
-          profiles.slice(0, 50).map((singleProfile, i) => {
-            return (
-              <Card.Body key={i}>
-                <Container fluid>
-                  <Row>
-                    <Col xs={4}>
-                      <Card.Img
-                        src={singleProfile.image}
-                        className=' rounded-pill'
-                      />
-                    </Col>
-                    <Col xs={8} className=' px-0'>
-                      <h6
-                        style={{ width: 'max-content' }}
-                        className='overStyleProfileSuggestName'
-                      >
-                        {singleProfile.name}
-                      </h6>
-                      <p
-                        className='btn text-truncate p-0'
-                        style={{ fontSize: '0.9rem', maxWidth: '100%' }}
-                      >
-                        {singleProfile.bio}
-                      </p>
-                      <div>
-                        <Button
-                          onClick={() => {
-                            navigate(`/user/${singleProfile._id}`)
-                          }}
-                          variant='outline'
-                          className=' fw-semibold border border-1 border-black rounded-5'
-                        >
-                          <i className='bi bi-person-fill-add'></i> Collegati
-                        </Button>
-                      </div>
-                    </Col>
-                  </Row>
-                </Container>
-                <hr />
-              </Card.Body>
-            )
-          })}
-
-        <Card.Footer className='text-center overMostrTutto'>
+        <Card.Footer className="text-center overMostrTutto">
           <Button
-            onClick={handleShowAll}
-            variant='outline'
-            className='w-100 fw-semibold'
+            onClick={() => setShowAll(!showAll)}
+            variant="outline"
+            className="w-100 fw-semibold"
           >
-            Mostra tutto
+            {showAll ? 'Mostra meno' : 'Mostra tutto'}
           </Button>
         </Card.Footer>
       </Card>

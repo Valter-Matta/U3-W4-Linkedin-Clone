@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-
+import { FaTrash } from 'react-icons/fa6'
 import { FaRegStar } from 'react-icons/fa'
 import { IoStarSharp } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
@@ -102,6 +102,37 @@ export default function ProfileActivities() {
     } catch (error) {
       console.error('Errore nel commentare:', error)
       alert('Si è verificato un errore nel commento')
+    }
+  }
+
+  const deletePost = async (postId) => {
+    const confirmDelete = window.confirm(
+      'Sei sicuro di voler eliminare questo post? Questa azione non può essere annullata.'
+    )
+
+    if (!confirmDelete) {
+      return
+    }
+    try {
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/posts/${postId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${state.profileKey.key}`,
+          },
+        }
+      )
+
+      if (response.ok) {
+        setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId))
+        alert('Post eliminato con successo!')
+      } else {
+        alert("Errore durante l'eliminazione del post")
+      }
+    } catch (error) {
+      console.error("Errore durante l'eliminazione del post:", error)
+      alert("Si è verificato un errore durante l'eliminazione del post")
     }
   }
 
@@ -265,6 +296,11 @@ export default function ProfileActivities() {
             >
               Pubblica
             </button>
+            <FaTrash
+              className="fs-2"
+              style={{ cursor: 'pointer' }}
+              onClick={() => deletePost(post._id)}
+            />
           </div>
         </div>
       </div>
