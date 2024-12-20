@@ -1,4 +1,4 @@
-import { Container, Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import HomeSideBar from './HomeSideBar'
 import HomeCenterComponent from './HomeCenterComponents'
 import HomeRightTop from '../components/HomeRightTop'
@@ -13,7 +13,7 @@ const HomeMainComponent = () => {
       <Col md={7} lg={6}>
         <HomeCenterComponent />
       </Col>
-      <Col lg={3} className="d-none d-xl-block">
+      <Col lg={3} className='d-none d-xl-block'>
         <HomeRightTop />
         <HomeRightBottom />
       </Col>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Row } from 'react-bootstrap'
 import { UMBERTO_KEY } from '../redux/actions'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const ProfileAside = () => {
   const [profiles, setProfiles] = useState([])
@@ -62,7 +62,7 @@ const ProfileAside = () => {
               </Button>
             </Card.Title>
             <Card.Text style={{ fontSize: '0.9rem', color: 'gray' }}>
-              www.linkedin.com/in/umberto-tramontano-38b3a5342
+              www.linkedin.com/in/user-38b3a5342
             </Card.Text>
           </div>
         </Card.Body>
@@ -90,12 +90,17 @@ const ProfileAside = () => {
                       />
                     </Col>
                     <Col xs={8} className=' px-0'>
-                      <h6
-                        style={{ width: 'max-content' }}
-                        className='overStyleProfileSuggestName'
+                      <Link
+                        className=' text-decoration-none text-black'
+                        to={`/user/${singleProfile._id}`}
                       >
-                        {singleProfile.name}
-                      </h6>
+                        <h6
+                          style={{ width: 'max-content' }}
+                          className='overStyleProfileSuggestName'
+                        >
+                          {singleProfile.name}
+                        </h6>
+                      </Link>
                       <p
                         className='btn text-truncate p-0'
                         style={{ fontSize: '0.9rem', maxWidth: '100%' }}
