@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { IoMdPhotos } from 'react-icons/io'
@@ -28,6 +28,7 @@ export default function HomeCenterComponent() {
 
   useEffect(() => {
     fetchPosts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -173,11 +174,11 @@ export default function HomeCenterComponent() {
           marginBottom: '15px',
         }}
       >
-        <div className="d-flex">
-          <Link to="/">
+        <div className='d-flex'>
+          <Link to='/'>
             <img
               src={profileState.image}
-              alt="profile"
+              alt='profile'
               style={{
                 width: '50px',
                 height: '50px',
@@ -188,8 +189,8 @@ export default function HomeCenterComponent() {
           </Link>
 
           <input
-            type="text"
-            placeholder="Crea un post"
+            type='text'
+            placeholder='Crea un post'
             style={{
               width: '100%',
               padding: '10px',
@@ -232,10 +233,10 @@ export default function HomeCenterComponent() {
               }}
             >
               <div>
-                <div className="d-flex align-items-center">
+                <div className='d-flex align-items-center'>
                   <img
-                    src="https://e7.pngegg.com/pngimages/81/570/png-clipart-profile-logo-computer-icons-user-user-blue-heroes-thumbnail.png"
-                    alt="profile"
+                    src='https://e7.pngegg.com/pngimages/81/570/png-clipart-profile-logo-computer-icons-user-user-blue-heroes-thumbnail.png'
+                    alt='profile'
                     style={{
                       width: '50px',
                       height: '50px',
@@ -272,7 +273,7 @@ export default function HomeCenterComponent() {
             {post.image && (
               <img
                 src={post.image}
-                alt="post"
+                alt='post'
                 style={{
                   width: '100%',
                   marginTop: '10px',
@@ -293,14 +294,14 @@ export default function HomeCenterComponent() {
                     key={comment._id}
                     style={{ padding: '5px 0', borderBottom: '1px solid #ccc' }}
                   >
-                    <div className="d-flex flex-column">
-                      <div className="d-flex">
+                    <div className='d-flex flex-column'>
+                      <div className='d-flex'>
                         <strong>{comment.author}</strong>:
-                        <p className="ms-1">{comment.comment}</p>
+                        <p className='ms-1'>{comment.comment}</p>
                       </div>
-                      <div className="d-flex">
+                      <div className='d-flex'>
                         <p>{comment.rate}</p>
-                        <FaRegStar className="text-warning" />
+                        <FaRegStar className='text-warning' />
                       </div>
                       <small>
                         {new Date(comment.createdAt)
@@ -327,8 +328,8 @@ export default function HomeCenterComponent() {
 
             <div style={{ marginTop: '15px' }}>
               <input
-                type="text"
-                placeholder="Scrivi il tuo commento"
+                type='text'
+                placeholder='Scrivi il tuo commento'
                 value={newComment[post._id]?.text || ''}
                 onChange={(e) => handleCommentChange(post._id, e)}
                 style={{
@@ -340,13 +341,13 @@ export default function HomeCenterComponent() {
                   minHeight: '50px',
                 }}
               />
-              <div className="d-flex">
+              <div className='d-flex'>
                 <input
-                  type="number"
-                  min="1"
-                  max="5"
-                  step="1"
-                  placeholder="Rate"
+                  type='number'
+                  min='1'
+                  max='5'
+                  step='1'
+                  placeholder='Rate'
                   value={rating[post._id] || ''}
                   onChange={(e) => handleRatingChange(post._id, e.target.value)}
                   style={{
@@ -404,7 +405,7 @@ export default function HomeCenterComponent() {
           >
             <h3>Crea un post</h3>
             <textarea
-              placeholder="Scrivi il tuo post"
+              placeholder='Scrivi il tuo post'
               value={newPost.text}
               onChange={(e) => setNewPost({ ...newPost, text: e.target.value })}
               style={{
@@ -416,13 +417,13 @@ export default function HomeCenterComponent() {
                 minHeight: '100px',
               }}
             />
-            <label style={{ cursor: 'pointer' }} htmlFor="file">
+            <label style={{ cursor: 'pointer' }} htmlFor='file'>
               <IoMdPhotos style={{ marginRight: '10px', fontSize: '20px' }} />
-              Carica un'immagine
+              Carica un&apos;immagine
             </label>
             <input
-              id="file"
-              type="file"
+              id='file'
+              type='file'
               onChange={(e) => setImageFile(e.target.files[0])}
               style={{
                 marginBottom: '10px',

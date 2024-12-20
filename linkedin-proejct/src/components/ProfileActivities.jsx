@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Card } from 'react-bootstrap'
-import { FaPen, FaRegStar } from 'react-icons/fa'
-import { FaArrowRightLong } from 'react-icons/fa6'
+
+import { FaRegStar } from 'react-icons/fa'
+
 import { useSelector } from 'react-redux'
 
 export default function ProfileActivities() {
@@ -30,6 +30,7 @@ export default function ProfileActivities() {
 
   useEffect(() => {
     fetchPosts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchComments = useCallback(
@@ -126,10 +127,10 @@ export default function ProfileActivities() {
           }}
         >
           <div>
-            <div className="d-flex align-items-center">
+            <div className='d-flex align-items-center'>
               <img
                 src={post.user.image}
-                alt="profile"
+                alt='profile'
                 style={{
                   width: '50px',
                   height: '50px',
@@ -166,7 +167,7 @@ export default function ProfileActivities() {
         {post.image && (
           <img
             src={post.image}
-            alt="post"
+            alt='post'
             style={{
               width: '100%',
               marginTop: '10px',
@@ -184,14 +185,14 @@ export default function ProfileActivities() {
                 key={comment._id}
                 style={{ padding: '5px 0', borderBottom: '1px solid #ccc' }}
               >
-                <div className="d-flex flex-column">
-                  <div className="d-flex">
+                <div className='d-flex flex-column'>
+                  <div className='d-flex'>
                     <strong>{comment.author}</strong>:
-                    <p className="ms-1">{comment.comment}</p>
+                    <p className='ms-1'>{comment.comment}</p>
                   </div>
-                  <div className="d-flex">
+                  <div className='d-flex'>
                     <p>{comment.rate}</p>
-                    <FaRegStar className="text-warning" />
+                    <FaRegStar className='text-warning' />
                   </div>
                   <small>
                     {new Date(comment.createdAt)
@@ -217,8 +218,8 @@ export default function ProfileActivities() {
         )}
         <div style={{ marginTop: '15px' }}>
           <input
-            type="text"
-            placeholder="Scrivi il tuo commento"
+            type='text'
+            placeholder='Scrivi il tuo commento'
             value={newComment[post._id]?.text || ''}
             onChange={(e) => handleCommentChange(post._id, e)}
             style={{
@@ -230,10 +231,10 @@ export default function ProfileActivities() {
               minHeight: '50px',
             }}
           />
-          <div className="d-flex">
+          <div className='d-flex'>
             <input
-              type="number"
-              placeholder="Rating"
+              type='number'
+              placeholder='Rating'
               value={rating[post._id] || ''}
               onChange={(e) => handleRatingChange(post._id, e.target.value)}
               style={{

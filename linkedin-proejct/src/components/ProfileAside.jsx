@@ -62,7 +62,7 @@ const ProfileAside = () => {
               </Button>
             </Card.Title>
             <Card.Text style={{ fontSize: '0.9rem', color: 'gray' }}>
-              www.linkedin.com/in/umberto-tramontano-38b3a5342
+              www.linkedin.com/in/user-38b3a5342
             </Card.Text>
           </div>
         </Card.Body>
